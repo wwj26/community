@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.UUID;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import sun.plugin.util.UIUtil;
 
@@ -37,7 +39,8 @@ public class AuthorzeController {
     @RequestMapping("callback")
     public String callback(@RequestParam(name = "code")  String code,
                            @RequestParam(name = "state") String state,
-                           HttpServletRequest request){
+                           HttpServletResponse httpServletResponse
+                          ){
         AccessTokenDto accessTokenDto = new AccessTokenDto ();
         accessTokenDto.setClient_id (clientId);
         accessTokenDto.setClient_secret (clientSecret);
@@ -54,8 +57,7 @@ public class AuthorzeController {
             user.setGmtCreate (System.currentTimeMillis ());
             user.setGmtModified (user.getGmtCreate ());
             userDao.save (user);
-
-            request.getSession ().setAttribute ("user",user);
+            httpServletResponse.addCookie (new Cookie ("token",user.getToken ()));
             return "redirect:/";
         }else {
             return "redirect:/";

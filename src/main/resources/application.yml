@@ -14,3 +14,8 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.hard.entity
+
+
+logging:
+  level:
+    com.hard.dao: debug

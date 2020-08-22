@@ -8,4 +8,8 @@
         values (#{id},#{name},#{accountId},#{token},#{gmtCreate},#{gmtModified})
     </insert>
 
+    <select id="findByToken" parameterType="String" resultType="User">
+        select * from user where token = #{token}
+    </select>
+
 </mapper>
