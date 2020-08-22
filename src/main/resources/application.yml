@@ -4,3 +4,13 @@ github:
   clientId: dc951789fcf0508a498c
   clientSecret: 11f0b1a8533c202a5755c721f0782de4ed4b1210
   url: http://localhost:8887/callback
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/community?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.hard.entity
