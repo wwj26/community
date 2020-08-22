@@ -5,6 +5,7 @@ import com.hard.dto.GithubUser;
 import com.hard.provider.GithubProvider;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,16 +16,23 @@ public class AuthorzeController {
 
     @Autowired
     private GithubProvider githubProvider;
+    @Value ("${github.clientId}")
+    private String clientId;
+    @Value ("${github.clientSecret}")
+    private String clientSecret;
+    @Value ("${github.url}")
+    private String url;
+
 
     @RequestMapping("callback")
     public String callback(@RequestParam(name = "code")  String code,
                            @RequestParam(name = "state") String state){
 
         AccessTokenDto accessTokenDto = new AccessTokenDto ();
-        accessTokenDto.setClient_id ("dc951789fcf0508a498c");
-        accessTokenDto.setClient_secret ("11f0b1a8533c202a5755c721f0782de4ed4b1210");
+        accessTokenDto.setClient_id (clientId);
+        accessTokenDto.setClient_secret (clientSecret);
         accessTokenDto.setCode (code);
-        accessTokenDto.setRedirect_uri ("http://localhost:8887/callback");
+        accessTokenDto.setRedirect_uri (url);
         accessTokenDto.setState (state);
         String accessToken = githubProvider.getAccessToken (accessTokenDto);
         GithubUser user = githubProvider.getUser (accessToken);
